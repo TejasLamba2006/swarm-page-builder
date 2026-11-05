@@ -1,0 +1,49 @@
+<!--
+  Plain HTML / Astro / Vite. Copy assets/swarm-engine.js to your public/ folder first.
+
+  1) Paste the <style> and first <script> as high in <head> as you can. They hide the
+     page before first paint so visitors don't see the real page flash before the build.
+  2) Paste the last <script> just before </body>.
+  Set --swarm-cover-bg to your real page background color.
+-->
+<style>
+  html[data-swarm-init="true"]::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 2147483640;
+    background: var(--swarm-cover-bg, #ffffff);
+  }
+</style>
+<script>
+  // Mark the page as "about to be built" if this route has not been built this session.
+  try {
+    var built = JSON.parse(sessionStorage.getItem("portfolio-built-paths-v1") || "[]");
+    var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduced && (!Array.isArray(built) || built.indexOf(location.pathname) === -1)) {
+      document.documentElement.setAttribute("data-swarm-init", "true");
+      document.documentElement.setAttribute("data-swarm-building", "true");
+    }
+  } catch (e) {}
+</script>
+
+<!-- before </body> -->
+<script>
+  // Optional: custom cursor names and colors. Without this the engine uses people names.
+  window.__swarmModels = [
+    { name: "Claude Opus", color: "#d97757" },
+    { name: "GPT", color: "#10a37f" },
+    { name: "Gemini", color: "#4285f4" },
+    { name: "DeepSeek", color: "#4d6bfe" },
+    { name: "Grok", color: "#f59e0b" },
+  ];
+  window.addEventListener("load", function () {
+    if (document.documentElement.getAttribute("data-swarm-init") !== "true") return;
+    var s = document.createElement("script");
+    s.src = "/swarm-engine.js";
+    s.onload = function () { window.__swarmRebuild.start(); };
+    s.onerror = function () { document.documentElement.removeAttribute("data-swarm-init"); };
+    document.head.appendChild(s);
+  });
+  // Optional replay hook: window.__swarmRebuild.restart()
+</script>

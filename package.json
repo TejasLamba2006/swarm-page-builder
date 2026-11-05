@@ -1,0 +1,14 @@
+{
+  "name": "swarm-page-builder",
+  "version": "1.0.0",
+  "description": "Claude Code skill and standalone script that rebuilds a live web page with multiplayer AI cursors (rects, I-beam typing, pen-tool lines, ruler guides, Web Audio).",
+  "license": "MIT",
+  "author": "Tejas Lamba",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TejasLamba2006/swarm-page-builder.git"
+  },
+  "homepage": "https://github.com/TejasLamba2006/swarm-page-builder#readme",
+  "keywords": ["claude-code", "skill", "agent-skill", "swarm", "multiplayer-cursors", "figma", "page-animation", "nextjs", "shadow-dom", "webaudio"],
+  "files": ["LICENSE", "SKILL.md", "assets", "templates", "skills", "README.md"]
+}
